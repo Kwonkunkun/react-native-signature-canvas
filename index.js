@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, forwardRef, useImperativeHandle } from "react";
+import React, { useState, useMemo, useRef, forwardRef, useImperativeHandle, useEffect } from "react";
 import { View, StyleSheet, ActivityIndicator } from "react-native";
 
 import htmlContent from "./h5/html";
@@ -181,7 +181,13 @@ const SignatureView = forwardRef(({
   }), [webViewRef]);
 
   const renderError = ({nativeEvent}) => console.warn("WebView error: ", nativeEvent);
-
+  
+  useEffect(()=> {
+    if(webViewRef.current){
+      webViewRef.current.reload();
+    }
+  }, [source])
+  
   return (
     <View style={[styles.webBg, style]}>
       <WebView
